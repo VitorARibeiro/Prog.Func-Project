@@ -19,7 +19,35 @@ tarefa2 = do
     conteudoAlunos <- readFile "listaalunos.txt"
     printNomes (lines conteudoAlunos) (lines conteudoInscricao) (lines conteudoDisciplina)
 
+tarefa3 :: IO()
+tarefa3 = do
+    conteudoDisciplina <- readFile "ucs.txt"
+    conteudoInscricao <- readFile "inscricoes.txt"
+    conteudoAlunos <- readFile "listaalunos.txt"
+    putStrLn "indique o nome da disciplina"
+    disciplina <- getLine
+    printDisciplinas_input disciplina (lines conteudoDisciplina) (lines conteudoInscricao) (lines conteudoAlunos)
+
 -------Funcoes utilizadas nas tarefas-------
+---Funcoes tarefa3 
+printDisciplinas_input :: String -> [String] -> [String] -> [String]-> IO() -- da print apenas no nome da uc
+printDisciplinas_input w [] y x = return ()
+printDisciplinas_input input conteudo_disc conteudo_insc conteudo_alunos= do
+
+    putStrLn ("-----"++ input ++ "-----") -- dar print ao nome da disciplina
+    encontrarNome input conteudo_disc conteudo_insc conteudo_alunos
+
+
+encontrarNome:: String -> [String] -> [String] -> [String]-> IO() --descobre o numero da disciplina a partir do nome
+encontrarNome x [] y z = return()
+encontrarNome input (linha:linhas) conteudo_insc conteudo_alunos = do
+    let numero = head (words linha)
+    if input == unwords (tail(tail(words linha)))
+        then descobrirAlxxx numero conteudo_insc conteudo_alunos --funcao usada na tarefa 1, com o numero descobre o al
+        else return()
+    encontrarNome input linhas conteudo_insc conteudo_alunos
+
+
 ---Funcoes Tarefa2
 printNomes :: [String] -> [String] -> [String]-> IO() 
 printNomes [] y x = return ()
