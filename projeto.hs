@@ -11,7 +11,7 @@ tarefa1 = do
     conteudoAlunos <- readFile "listaalunos.txt"
     printDisciplinas (lines conteudoDisciplina) (lines conteudoInscricao) (lines conteudoAlunos)
 
---Tareda2
+--Tarefa2
 tarefa2 :: IO()
 tarefa2 = do
     conteudoDisciplina <- readFile "ucs.txt"
@@ -39,7 +39,37 @@ tarefa4 = do
     aluno <- getLine
     printNomes_input aluno (lines conteudoAlunos) (lines conteudoInscricao) (lines conteudoDisciplina)
 
+--Tarefa5
+tarefa5 :: IO()
+tarefa5 = do 
+    putStrLn " "
+    putStrLn "-----Menu-----"
+    putStrLn "1-Tarefa1"
+    putStrLn "2-Tarefa2"
+    putStrLn "3-Tarefa3"
+    putStrLn "4-Tarefa4"
+    putStrLn "0-Sair"
+    putStrLn "indique a opcao 0 a 4"
+    putStrLn "--------------"
+
+    opcao <-getLine
+    menu opcao
+    if opcao /= "0"
+        then tarefa5
+        else return()
+    
 -------Funcoes utilizadas nas tarefas-------
+--Funcoes tarefa5
+
+menu :: String -> IO()
+menu string 
+    |string == "0" = putStrLn "Terminou tarefa5"
+    |string == "1" = tarefa1
+    |string == "2" = tarefa2
+    |string == "3" = tarefa3
+    |string == "4" = tarefa4
+    |otherwise = putStrLn "Opcao invalida"
+
 --Funcoes tarefa4
 printNomes_input ::String-> [String] -> [String] -> [String]-> IO() 
 printNomes_input w [] y x = return ()
