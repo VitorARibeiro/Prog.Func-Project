@@ -6,31 +6,42 @@ import System.IO
 tarefa1 :: IO()
 tarefa1 = do
     conteudoDisciplina <- readFile "ucs.txt"
-    counteudoInscricao <- readFile "inscricoes.txt"
-    printDisciplinas (lines conteudoDisciplina) (lines counteudoInscricao)
+    conteudoInscricao <- readFile "inscricoes.txt"
+    conteudoAlunos <- readFile "listaalunos.txt"
+    printDisciplinas (lines conteudoDisciplina) (lines conteudoInscricao) (lines conteudoAlunos)
+
     
 
 
     
-printDisciplinas :: [String] -> [String] -> IO() -- da print apenas no nome da uc
-printDisciplinas [] y = return ()
-printDisciplinas (linha:linhas) conteudo = do
+printDisciplinas :: [String] -> [String] -> [String]-> IO() -- da print apenas no nome da uc
+printDisciplinas [] y x = return ()
+printDisciplinas (linha:linhas) conteudo_insc conteudo_alunos= do
 
-    putStrLn (last  (words linha) ++ " :") -- dar print ao nome da disciplina
-
-
+    putStrLn ("-----"++ unwords(tail(tail (words linha))) ++ "-----") -- dar print ao nome da disciplina
     let numero = head (words linha) --numero da disciplina
-    descobrirAlxxx numero conteudo  -- descobrir al usando numero
-    printDisciplinas linhas conteudo -- print proxima disciplina
+
+    descobrirAlxxx numero conteudo_insc conteudo_alunos  -- descobrir al usando numero
+    printDisciplinas linhas conteudo_insc conteudo_alunos -- print proxima disciplina
 
 
-descobrirAlxxx:: String -> [String] -> IO()
-descobrirAlxxx numero [] = return ()
-descobrirAlxxx numero (linha:linhas) = do
+descobrirAlxxx:: String -> [String] -> [String]-> IO()
+descobrirAlxxx numero [] conteudo_alunos = return()
+descobrirAlxxx numero (linha:linhas) conteudo_alunos = do
+    let numero_al = head (words linha)
     if last (words linha) == numero
-        then putStrLn (head (words linha))
+        then descobrirNome numero_al conteudo_alunos
         else return ()
-    descobrirAlxxx numero linhas
+    descobrirAlxxx numero linhas conteudo_alunos
+
+descobrirNome :: String -> [String] -> IO()
+descobrirNome al [] = return()
+descobrirNome al (linha:linhas) = do
+    if head (words linha) == al
+        then putStrLn (unwords (tail (tail(words linha))))
+        else return()
+    descobrirNome al linhas
+
     
     
     
