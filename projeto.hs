@@ -19,6 +19,7 @@ tarefa2 = do
     conteudoAlunos <- readFile "listaalunos.txt"
     printNomes (lines conteudoAlunos) (lines conteudoInscricao) (lines conteudoDisciplina)
 
+--tarefa3
 tarefa3 :: IO()
 tarefa3 = do
     conteudoDisciplina <- readFile "ucs.txt"
@@ -28,7 +29,34 @@ tarefa3 = do
     disciplina <- getLine
     printDisciplinas_input disciplina (lines conteudoDisciplina) (lines conteudoInscricao) (lines conteudoAlunos)
 
+--tarefa4
+tarefa4 :: IO()
+tarefa4 = do
+    conteudoDisciplina <- readFile "ucs.txt"
+    conteudoInscricao <- readFile "inscricoes.txt"
+    conteudoAlunos <- readFile "listaalunos.txt"
+    putStrLn "indique o nome do aluno"
+    aluno <- getLine
+    printNomes_input aluno (lines conteudoAlunos) (lines conteudoInscricao) (lines conteudoDisciplina)
+
 -------Funcoes utilizadas nas tarefas-------
+--Funcoes tarefa4
+printNomes_input ::String-> [String] -> [String] -> [String]-> IO() 
+printNomes_input w [] y x = return ()
+printNomes_input input conteudo_alunos conteudo_insc conteudo_disc= do
+
+    putStrLn ("-----"++ input ++ "-----") -- dar print ao nome da disciplina
+    encontrarAlxxx input conteudo_alunos conteudo_insc conteudo_disc--numero da disciplina
+
+encontrarAlxxx:: String -> [String] -> [String] -> [String]-> IO() --descobre o al a partir do nome do aluno
+encontrarAlxxx x [] y z = return()
+encontrarAlxxx input (linha:linhas) conteudo_insc conteudo_disc = do
+    let numero_al = head (words linha)
+    if input == unwords (tail(tail(words linha)))
+        then  descobrirNumero numero_al conteudo_insc conteudo_disc --funcao usada na tarefa 2 com al diz o numero das disciplinas
+        else return()
+    encontrarAlxxx input linhas conteudo_insc conteudo_disc
+
 ---Funcoes tarefa3 
 printDisciplinas_input :: String -> [String] -> [String] -> [String]-> IO() -- da print apenas no nome da uc
 printDisciplinas_input w [] y x = return ()
@@ -60,20 +88,20 @@ printNomes (linha:linhas) conteudo_insc conteudo_dis= do
     descobrirNumero numero_al conteudo_insc conteudo_dis  -- descobrir al usando numero
     printNomes linhas conteudo_insc conteudo_dis-- print proxima disciplina
 
-descobrirNumero:: String -> [String] -> [String]-> IO() --descobre o al a partir do numero da disciplina
+descobrirNumero:: String -> [String] -> [String]-> IO() --descobre o numero a partir do al
 descobrirNumero numero_al [] conteudo_disc = return()
 descobrirNumero numero_al (linha:linhas) conteudo_disc = do
     let numero_al2 = last (words linha) -- al do aluno
     if head (words linha) == numero_al
-        then descobrirUc numero_al2 conteudo_disc --tranforma al em nome
+        then descobrirUc numero_al2 conteudo_disc --numero em UC
         else return ()
     descobrirNumero numero_al linhas conteudo_disc
 
-descobrirUc :: String -> [String] -> IO() --descobre o nome a partir do al
+descobrirUc :: String -> [String] -> IO() --descobre a UC a partir do numero
 descobrirUc numero_al2 [] = return()
 descobrirUc numero_al2 (linha:linhas) = do
     if head (words linha) == numero_al2
-        then putStrLn (unwords (tail (tail(words linha)))) --dar print no nome
+        then putStrLn (unwords (tail (tail(words linha)))) --dar print no nome da UC
         else return()
     descobrirNome numero_al2 linhas
 
