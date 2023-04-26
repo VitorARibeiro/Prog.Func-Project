@@ -115,7 +115,7 @@ printNomes (linha:linhas) conteudo_insc conteudo_dis= do
     let numero_al = head (words linha) --numero da disciplina
 
    
-    descobrirNumero numero_al conteudo_insc conteudo_dis  -- descobrir al usando numero
+    descobrirNumero numero_al conteudo_insc conteudo_dis  -- descobrir numero usando al
     printNomes linhas conteudo_insc conteudo_dis-- print proxima disciplina
 
 descobrirNumero:: String -> [String] -> [String]-> IO() --descobre o numero a partir do al
